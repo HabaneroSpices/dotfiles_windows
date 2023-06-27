@@ -14,6 +14,9 @@
 # {{- $email := promptString "Git email address for the author/committer" }}
 # {{- $name := promptString "Git username for the author/committer" }}
 
+[git]
+    autoCommit = true
+    autoPush = true
 [data]
     email = "{{ $email }}"
     name = "{{ $name }}"
