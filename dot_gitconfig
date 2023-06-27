@@ -1,0 +1,10 @@
+[core]
+  excludesfile = ~/.gitignore
+  autocrlf = false
+[push]
+	autoSetupRemote = true
+[alias]
+	please = push --force-with-lease
+	dog = log --all --decorate --oneline --graph
+[include]
+  path = ~/.gitwork
