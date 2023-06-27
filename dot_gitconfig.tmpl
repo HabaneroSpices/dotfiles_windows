@@ -1,0 +1,20 @@
+[core]
+  excludesfile = ~/.gitignore
+  autocrlf = false
+
+[push]
+	autoSetupRemote = true
+
+[user]
+    # Specify the email address of the author/committer.
+    email = "{{ .email }}"
+
+    # Specify the username of the author/committer.
+    name = "{{ .name }}"
+
+[include]
+    # Include aliases.
+    path = .gitconfig_alias
+
+    # Include extra configuration (if any).
+    path = .gitconfig_local
