@@ -14,7 +14,9 @@ com.googlecode.iterm2.plist
 
 # Ignore non-Windows files.
 {{ if ne .chezmoi.os "windows" -}}
-dot_config/windows_terminal
+.config/windows_terminal
+.config/starship.toml
 {{- end }}
 
+# Ignore disabled scripts
 windows_terminal.bat
