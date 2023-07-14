@@ -16,3 +16,5 @@ com.googlecode.iterm2.plist
 {{ if ne .chezmoi.os "windows" -}}
 dot_config/windows_terminal
 {{- end }}
+
+windows_terminal.bat
