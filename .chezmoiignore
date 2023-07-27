@@ -12,11 +12,13 @@ LICENSE
 README.md
 com.googlecode.iterm2.plist
 
-# Ignore non-Windows files.
+# IF THE ENVIRONMENT IS NOT WINDOWS = IGNORE THESE FILES! WHY IS THIS SO HARD TO UNDERSTAND MAN, LIKE CMON...
 {{ if ne .chezmoi.os "windows" -}}
 .config/windows_terminal
 .config/starship.toml
+Documents/PowerShell/profile.ps1
 {{- end }}
 
-# Ignore disabled scripts
-windows_terminal.bat
+# Disabled scripts
+.chezmoiscripts/windows_terminal.bat
+.chezmoiscripts/run_once_100_install-packages.ps1.tmpl
