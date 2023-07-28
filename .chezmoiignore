@@ -22,3 +22,4 @@ Documents/PowerShell/profile.ps1
 # Disabled scripts
 .chezmoiscripts/windows_terminal.bat
 .chezmoiscripts/run_once_100_install-packages.ps1.tmpl
+.chezmoiscripts/run_once_200_setup-nvim.ps1.tmpl
