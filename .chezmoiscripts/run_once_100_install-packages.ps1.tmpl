@@ -1,3 +1,42 @@
-{{ if eq .chezmoi.os "windows" -}}
-// Refer to https://github.com/zhaohongxuan/dotfiles/blob/daa32c398bef80b7b207cdbdf898f617e2c69169/.chezmoiscripts/run_once_100_install-packages.sh.tmpl
-{{- end }}
+{{ if ne .chezmoi.os "windows" -}} exit {{- end }}
+# Check to see if we are currently running "as Administrator"
+if (!(Verify-Elevated))
+{
+  $newProcess = new-object System.Diagnostics.ProcessStartInfo "PowerShell";
+  $newProcess.Arguments = $myInvocation.MyCommand.Definition;
+  $newProcess.Verb = "runas";
+  [System.Diagnostics.Process]::Start($newProcess);
+
+  exit
+}
+
+### Package Providers
+Write-Host "Installing Package Providers..." -ForegroundColor "Yellow"
+Get-PackageProvider NuGet -Force | Out-Null
+
+### Install PowerShell Modules
+Write-Host "Installing PowerShell Modules..." -ForegroundColor "Yellow"
+Install-Module Posh-Git -Scope CurrentUser -Force
+Install-Module PSWindowsUpdate -Scope CurrentUser -Force
+
+# system and cli
+winget install Git.Git                                   --silent --accept-package-agreements --override "/VerySilent /NoRestart /o:PathOption=CmdTools /Components=""icons,assoc,assoc_sh,gitlfs"""
+winget install OpenJS.NodeJS                             --silent --accept-package-agreements
+winget install Python.Python.3                           --silent --accept-package-agreements
+
+# browsers
+winget install Mozilla.Firefox                           --silent --accept-package-agreements
+
+# dev tools and frameworks
+winget install Microsoft.PowerShell                      --silent --accept-package-agreements
+winget install Neovim.Neovim                             --silent --accept-package-agreements
+
+# Refresh environment
+Refresh-Environment
+
+### Node Packages
+Write-Host "Installing Node Packages..." -ForegroundColor "Yellow"
+if (which npm)
+{
+  npm update npm
+}
