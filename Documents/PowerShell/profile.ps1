@@ -1,3 +1,4 @@
+# $powershellProfilePath = (split-Path (Split-Path $PROFILE -parent) -parent) + "\PowerShell"
 ## ENVIRONMENT VARIABLES
 # Add custom dirs to PATH
 $env:Path += ";C:\Users\madsc\.bin\"
