@@ -1,19 +1,4 @@
-function Refresh-Environment
-{
-  $locations = 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment',
-  'HKCU:\Environment'
-
-  $locations | ForEach-Object {
-    $k = Get-Item $_
-    $k.GetValueNames() | ForEach-Object {
-      $name  = $_
-      $value = $k.GetValue($_)
-      Set-Item -Path Env:\$name -Value $value
-    }
-  }
-
-  $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
-}
+{{ template "ps_functions" }}
 
 # system and cli
 Write-Host "Installing Git"
@@ -22,6 +7,8 @@ Write-Host "Installing NodeJS"
 winget install OpenJS.NodeJS                             --silent --accept-package-agreements
 Write-Host "Installing Python3"
 winget install Python.Python.3                           --silent --accept-package-agreements
+Write-Host "Installing gsudo"
+winget install gerardog.gsudo
 
 # browsers
 Write-Host "Installing Firefox"
@@ -35,10 +22,3 @@ winget install Neovim.Neovim                             --silent --accept-packa
 
 # Refresh environment
 Refresh-Environment
-
-### Node Packages
-Write-Host "Installing Node Packages..." -ForegroundColor "Yellow"
-if (which npm)
-{
-  npm update npm
-}
