@@ -1,4 +1,13 @@
 {{ if ne .chezmoi.os "windows" -}} exit {{- end }}
+# These components will be loaded for all PowerShell instances
+
+Push-Location (Join-Path (Split-Path -parent $profile))
+
+# From within the ./components directory...
+. .\profile.ps1
+
+Pop-Location
+
 # Check to see if we are currently running "as Administrator"
 if (!(Verify-Elevated))
 {
