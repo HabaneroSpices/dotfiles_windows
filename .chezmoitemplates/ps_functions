@@ -1,4 +1,4 @@
-// -*-mode:ps1-*- vim:ft=ps1
+#! -*-mode:ps1-*- vim:ft=ps1
 function Refresh-Environment
 {
   $locations = 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment',
