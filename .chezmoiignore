@@ -12,7 +12,7 @@ LICENSE
 README.md
 com.googlecode.iterm2.plist
 
-# IF THE ENVIRONMENT IS NOT WINDOWS = IGNORE THESE FILES! WHY IS THIS SO HARD TO UNDERSTAND MAN, LIKE CMON...
+# windows specific files
 {{ if ne .chezmoi.os "windows" -}}
 .config/windows_terminal
 .config/starship.toml
