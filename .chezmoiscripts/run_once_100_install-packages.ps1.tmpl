@@ -15,14 +15,6 @@ function Refresh-Environment
   $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 }
 
-### Package Providers
-Write-Host "Installing Package Providers..." -ForegroundColor "Yellow"
-
-### Install PowerShell Modules
-Write-Host "Installing PowerShell Modules..." -ForegroundColor "Yellow"
-Install-Module Posh-Git -Scope CurrentUser -Force
-Install-Module PSWindowsUpdate -Scope CurrentUser -Force
-
 # system and cli
 Write-Host "Installing Git"
 winget install Git.Git                                   --silent --accept-package-agreements --override "/VerySilent /NoRestart /o:PathOption=CmdTools /Components=""icons,assoc,assoc_sh,gitlfs"""
