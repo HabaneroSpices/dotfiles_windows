@@ -1,12 +1,4 @@
 {{ if ne .chezmoi.os "windows" -}} exit {{- end }}
-function Verify-Elevated
-{
-  # Get the ID and security principal of the current user account
-  $myIdentity=[System.Security.Principal.WindowsIdentity]::GetCurrent()
-  $myPrincipal=new-object System.Security.Principal.WindowsPrincipal($myIdentity)
-  # Check to see if we are currently running "as Administrator"
-  return $myPrincipal.IsInRole([System.Security.Principal.WindowsBuiltInRole]::Administrator)
-}
 # Reload the Shell
 function Reload-Powershell
 {
@@ -33,15 +25,14 @@ function Refresh-Environment
   $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 }
 
-# Check to see if we are currently running "as Administrator"
-if (!(Verify-Elevated))
+if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator'))
 {
-  $newProcess = new-object System.Diagnostics.ProcessStartInfo "pwsh";
-  $newProcess.Arguments = $myInvocation.MyCommand.Definition;
-  $newProcess.Verb = "runas";
-  [System.Diagnostics.Process]::Start($newProcess);
-
-  exit
+  if ([int](Get-CimInstance -Class Win32_OperatingSystem | Select-Object -ExpandProperty BuildNumber) -ge 6000)
+  {
+    $CommandLine = "-File `"" + $MyInvocation.MyCommand.Path + "`" " + $MyInvocation.UnboundArguments
+    Start-Process -FilePath PowerShell.exe -Verb Runas -ArgumentList $CommandLine
+    Exit
+  }
 }
 
 ### Package Providers
