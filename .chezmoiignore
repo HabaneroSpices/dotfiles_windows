@@ -17,9 +17,9 @@ com.googlecode.iterm2.plist
 .config/windows_terminal
 .config/starship.toml
 Documents/PowerShell/profile.ps1
+.chezmoiscripts/100_install-packages.ps1
 {{- end }}
 
 # Disabled scripts
 .chezmoiscripts/windows_terminal.bat
-.chezmoiscripts/100_install-packages.ps1
 .chezmoiscripts/200_setup-nvim.ps1
